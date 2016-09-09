@@ -1,0 +1,354 @@
+# Up to date as of v0.42.0
+# If a cop is not referenced here, the defaults fromn Rubocop will be used.
+
+AllCops:
+  Exclude:
+    - '**/db/schema.rb'
+    - '**/tmp/**/*'
+    - '**/vendor/**/*'
+  DefaultFormatter: offenses
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  ExtraDetails: true
+  UseCache: true
+  TargetRubyVersion: 2.3
+
+# Always use alias_method when aliasing methods of modules, classes, or singleton classes at runtime, as the lexical
+# scope of alias leads to unpredictability in these cases.
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+
+# Align the elements of a hash literal if they span more than one line.
+#
+# EnforcedHashRocketStyle: table - left alignment of keys, hash rockets, and values.
+#   'a'  => 2
+#   'bb' => 3
+#
+# EnforcedColonStyle: table - left alignment of keys and values.
+#   a:  0
+#   bb: 1
+Style/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
+# Alignment of parameters in multi-line method calls.
+#
+# The `with_fixed_indentation` style aligns the following lines with one level of indentation relative to the start of
+# the line with the method call.
+#
+#     method_call(a,
+#       b)
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+# Checks for cases when you could use a block accepting version of a method that does automatic resource cleanup.
+#
+#   # bad
+#   f = File.open('file')
+#
+#   # good
+#   f = File.open('file') do
+#     ...
+#   end
+Style/AutoResourceCleanup:
+  Enabled: true
+
+# Checks if usage of %() or %Q() matches configuration.
+# EnforcedStyle: percent_q - enforces use of %Q().
+Style/BarePercentLiterals:
+  EnforcedStyle: percent_q
+
+# Mapping from undesired method to desired method e.g. to use `detect` over `find`.
+Style/CollectionMethods:
+  Enabled: true
+  PreferredMethods:
+    collect: 'map'
+    collect!: 'map!'
+    inject: 'reduce'
+    detect: 'detect'
+    find_all: 'select'
+
+# No assignments in conditions. Ever. Just don't do it.
+Style/ConditionalAssignment:
+  Enabled: false
+
+# Warn on empty else statements
+#
+# EnforcedStyle: empty - only return an error for a completely empty else clause as sometimes it may be necessary to
+# return `nil` from an else branch.
+Style/EmptyElse:
+  EnforcedStyle: empty
+
+# Checks whether the source file has a utf-8 encoding comment or not.
+#
+# EnforcedStyle: when_needed - checks the contents of the file before issuing an error.
+Style/Encoding:
+  Enabled: true
+  EnforcedStyle: when_needed
+
+# Checks for if and unless statements that would fit on one line if written as a modifier if/unless.
+#
+# Triggers an warning for if/unless statements that would be under 120 characters.
+Style/IfUnlessModifier:
+  MaxLineLength: 120
+
+# Checks for `raise` or `fail` statements which do not specify an explicit exception class. (This raises a
+# `RuntimeError`. Prefer using exception classes which more precisely identify the nature of the error.)
+Style/ImplicitRuntimeError:
+  Enabled: true
+
+# Checks the indentation of the first element in an array literal.
+#
+# The value `consistent` means that the indentation of the first element shall always be relative to the first position
+# of the line where the opening bracket is.
+#
+# array = [
+#   :value
+# ]
+# and_in_a_method_call([
+#   :no_difference
+# ])
+Style/IndentArray:
+  EnforcedStyle: consistent
+
+# Checks the indentation of the first key in a hash literal.
+#
+# The value `consistent` means that the indentation of the first key shall always be relative to the first position
+# of the line where the opening brace is.
+#
+# hash = {
+#   key: :value
+# }
+# and_in_a_method_call({
+#   no: :difference
+# })
+Style/IndentHash:
+  EnforcedStyle: consistent
+
+# Checks for methods called on a do...end block. The point of this check is that it's easy to miss the call tacked on
+# to the block when reading code.
+Style/MethodCalledOnDoEndBlock:
+  Enabled: true
+
+# Checks for `if` / `case` expressions that do not have an `else` branch.
+#
+# Only configured to check for `case` statements. It's best practice to always provide a default for `case` statements.
+Style/MissingElse:
+  Enabled: true
+  EnforcedStyle: case
+
+# Checks whether the multiline assignments have a newline after the assignment operator.
+#
+# EnforcedStyle: new_line
+#
+# foo =
+#   if expression
+#     'bar'
+#   end
+Style/MultilineAssignmentLayout:
+  Enabled: true
+  EnforcedStyle: new_line
+
+# Checks the indentation of the method name part in method calls that span more than one line.
+#
+# EnforcedStyle: indented
+#
+# Thing.a
+#   .b
+#   .c
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# Checks the indentation of the right hand side operand in binary operations that span more than one line.
+#
+# EnforcedStyle: indented
+#
+# if a &&
+#     b
+#   something
+# end
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+# Use `next` to skip iteration instead of a condition at the end.
+#
+# # bad
+# [1, 2].each do |a|
+#   if a == 1 do
+#     puts a
+#   end
+# end
+#
+# # good
+# [1, 2].each do |a|
+#   next unless a == 1
+#
+#   puts a
+# end
+Style/Next:
+  EnforcedStyle: always
+
+# Checks for options hashes and discourages them if the current Ruby version supports keyword arguments.
+Style/OptionHash:
+  Enabled: true
+
+# Checks for badly named predicates.
+#
+# # bad
+# def is_even?(value) ...
+#
+# # good
+# def even?(value)
+#
+# # bad
+# def has_value? ...
+#
+# # good
+# def value? ...
+Style/PredicateName:
+  NamePrefix:
+    - is_
+    - was_
+    - has_
+    - have_
+  NamePrefixBlacklist:
+    - is_
+    - was_
+    - has_
+    - have_
+
+# Checks for the use of the send method. Prefers use of `__send__` and `public_send` over `send`.
+Style/Send:
+  Enabled: true
+
+# Enforces the use of consistent method names from the String class. So far it enforces use of `to_sym` over `intern`.
+Style/StringMethods:
+  Enabled: true
+
+# Check for array literals made up of symbols that are not using the %i() syntax.
+Style/SymbolArray:
+  Enabled: true
+  EnforcedStyle: brackets
+
+# Checks for the presence of parentheses around ternary conditions.
+#
+# EnforcedStyle: require_parantheses
+#
+# # bad
+# foo = bar? ? a : b
+# foo = bar.baz? ? a : b
+# foo = bar && baz ? a : b
+#
+# # good
+# foo = (bar?) ? a : b
+# foo = (bar.baz) ? a : b
+# foo = (bar && baz) ? a : b
+Style/TernaryParentheses:
+  EnforcedStyle: require_parentheses
+
+# Checks for while and until statements that would fit on one line if written as a modifier while/until.
+Style/WhileUntilModifier:
+  MaxLineLength: 120
+
+#################### Metrics ################################
+
+# Checks that the ABC size of methods is not higher than the configured maximum. The ABC size is based on assignments,
+# branches (method calls), and conditions. See http://c2.com/cgi/wiki?AbcMetric.
+Metrics/AbcSize:
+  Max: 22 # Open for discussion...
+
+# Checks if the length a class exceeds some maximum value. Ignores comment-only lines.
+Metrics/ClassLength:
+  Max: 200 # Open for discussion...
+
+# Checks that the cyclomatic complexity of methods is not higher than the configured maximum. The cyclomatic complexity
+# is the number of linearly independent paths through a method. The algorithm counts decision points and adds one.
+#
+# An if statement (or unless or ?:) increases the complexity by one. An else branch does not, since it doesn't add a
+# decision point. The && operator (or keyword and) can be converted to a nested if statement, and ||/or is shorthand for
+# a sequence of ifs, so they also add one. Loops can be said to have an exit condition, so they add one.
+Metrics/CyclomaticComplexity:
+  Max: 10 # Open for discussion...
+
+# Checks the length of lines in the source code.
+Metrics/LineLength:
+  Max: 120
+  Exclude:
+    - 'config/routes.rb'
+    - '**/config/initializers/**/*.rb'
+    - '**/db/seeds.rb'
+    - '**/db/migrate/*'
+    - '**/Gemfile'
+
+# Checks if the length of a method exceeds some maximum value. Ignores comment-only lines.
+Metrics/MethodLength:
+  Max: 20
+
+# Checks if the length of a module exceeds some maximum value. Ignores comment-only lines.
+Metrics/ModuleLength:
+  Max: 200 # Open for discussion...
+
+# Tries to produce a complexity score that's a measure of the complexity the reader experiences when looking at a
+# method. For that reason it considers `when` nodes as something that doesn't add as much complexity as an `if` or a
+# `&&`. Except if it's one of those special `case`/`when` constructs where there's no expression after `case`. Then
+# the cop treats it as an `if`/`elsif`/`elsif`... and lets all the `when` nodes count. In contrast to
+# CyclomaticComplexity, it considers `else` nodes as adding complexity.
+Metrics/PerceivedComplexity:
+  Max: 7
+
+#################### Lint ################################
+
+# Checks for assignments in the conditions of if/while/until.
+Lint/AssignmentInCondition:
+  AllowSafeAssignment: false
+
+# Checks whether the end keywords of method definitions are aligned properly.
+Lint/DefEndAlignment:
+  AutoCorrect: true
+
+# Checks whether the end keywords are aligned properly.
+#
+# EnforcedStyle: start_of_line - the `end` shall be aligned with the start of the line where the matching keyword
+# appears.
+Lint/EndAlignment:
+  AlignWith: start_of_line
+  AutoCorrect: true
+
+# Checks for interpolated literals.
+#
+# "result is #{10}"
+Lint/LiteralInInterpolation:
+  AutoCorrect: true
+
+##################### Rails ##################################
+
+Rails:
+  Enabled: true
+
+# Checks for the correct use of `Date` methods, such as `Date.today`, `Date.current` etc.
+#
+# Using `Date.today` is dangerous, because it doesn't know anything about Rails time zone. You must use
+# `Time.zone.today` instead.
+#
+# It also reports warnings when you are using the `to_time` method, because it doesn't know about Rails time zone
+# either.
+#
+# EnforcedStyle: strict -  the Date methods (`today`, `current`, `yesterday`, `tomorrow`) are prohibited and the usage
+# of both `to_time` and `to_time_in_current_zone` is reported as warning.
+Rails/Date:
+  EnforcedStyle: strict
+
+# Identifies possible cases where Active Record save! or related should be used instead of save because the model might
+# have failed to save and an exception is better than unhandled failure.
+#
+# This will ignore calls that are assigned to a variable or used as the condition in an if/unless statement.  It will
+# also ignore any call with more than 2 arguments as that is likely not an Active Record call or if a
+# Model.update(id, attributes) call.
+Rails/SaveBang:
+  Enabled: true
+
+# Checks for the use of Time methods without zone.
+#
+# EnforcedStyle: strict - only use of Time.zone is allowed.
+Rails/TimeZone:
+  EnforcedStyle: strict
