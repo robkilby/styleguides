@@ -72,6 +72,13 @@ Style/CollectionMethods:
 Style/ConditionalAssignment:
   Enabled: false
 
+# Checks that you have put a copyright in a comment before any code.
+Style/Copyright:
+  Enabled: true
+
+Style/DocumentationMethod:
+  Enabled: true
+
 # Warn on empty else statements
 #
 # EnforcedStyle: empty - only return an error for a completely empty else clause as sometimes it may be necessary to
@@ -85,6 +92,22 @@ Style/EmptyElse:
 Style/Encoding:
   Enabled: true
   EnforcedStyle: when_needed
+
+# Checks for a line break before the first element in a multi-line array.
+Style/FirstArrayElementLineBreak:
+  Enabled: true
+
+# Checks for a line break before the first element in a multi-line hash.
+Style/FirstHashElementLineBreak:
+  Enabled: true
+
+# Checks for a line break before the first argument in a multi-line method call.
+Style/FirstMethodArgumentLineBreak:
+  Enabled: true
+
+# Checks for a line break before the first parameter in a multi-line method parameter definition.
+Style/FirstMethodParameterLineBreak:
+  Enabled: true
 
 # Checks for if and unless statements that would fit on one line if written as a modifier if/unless.
 #
