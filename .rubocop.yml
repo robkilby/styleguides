@@ -1,5 +1,6 @@
-# Up to date as of v0.42.0
-# If a cop is not referenced here, the defaults fromn Rubocop will be used.
+# Up to date as of v0.42.0.
+# See https://github.com/robkilby/styleguides for original.
+# If a cop is not referenced here, the defaults from Rubocop will be used.
 
 AllCops:
   Exclude:
@@ -67,10 +68,6 @@ Style/CollectionMethods:
     inject: 'reduce'
     detect: 'detect'
     find_all: 'select'
-
-# No assignments in conditions. Ever. Just don't do it.
-Style/ConditionalAssignment:
-  Enabled: false
 
 # Checks that you have put a copyright in a comment before any code.
 Style/Copyright:
@@ -278,11 +275,11 @@ Style/WhileUntilModifier:
 # Checks that the ABC size of methods is not higher than the configured maximum. The ABC size is based on assignments,
 # branches (method calls), and conditions. See http://c2.com/cgi/wiki?AbcMetric.
 Metrics/AbcSize:
-  Max: 22 # Open for discussion...
+  Max: 22
 
 # Checks if the length a class exceeds some maximum value. Ignores comment-only lines.
 Metrics/ClassLength:
-  Max: 200 # Open for discussion...
+  Max: 100
 
 # Checks that the cyclomatic complexity of methods is not higher than the configured maximum. The cyclomatic complexity
 # is the number of linearly independent paths through a method. The algorithm counts decision points and adds one.
@@ -291,7 +288,7 @@ Metrics/ClassLength:
 # decision point. The && operator (or keyword and) can be converted to a nested if statement, and ||/or is shorthand for
 # a sequence of ifs, so they also add one. Loops can be said to have an exit condition, so they add one.
 Metrics/CyclomaticComplexity:
-  Max: 10 # Open for discussion...
+  Max: 10
 
 # Checks the length of lines in the source code.
 Metrics/LineLength:
@@ -309,7 +306,7 @@ Metrics/MethodLength:
 
 # Checks if the length of a module exceeds some maximum value. Ignores comment-only lines.
 Metrics/ModuleLength:
-  Max: 200 # Open for discussion...
+  Max: 100
 
 # Tries to produce a complexity score that's a measure of the complexity the reader experiences when looking at a
 # method. For that reason it considers `when` nodes as something that doesn't add as much complexity as an `if` or a
