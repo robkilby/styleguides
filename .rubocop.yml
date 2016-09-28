@@ -157,17 +157,16 @@ Style/MissingElse:
   Enabled: true
   EnforcedStyle: case
 
-# Checks whether the multiline assignments have a newline after the assignment operator.
+# Checks that multiline assignments do not have a newline after the assignment operator.
 #
-# EnforcedStyle: new_line
+# EnforcedStyle: same_line
 #
-# foo =
-#   if expression
-#     'bar'
-#   end
+# foo = if expression
+#   'bar'
+# end
 Style/MultilineAssignmentLayout:
   Enabled: true
-  EnforcedStyle: new_line
+  EnforcedStyle: same_line
 
 # Checks the indentation of the method name part in method calls that span more than one line.
 #
@@ -328,10 +327,13 @@ Lint/DefEndAlignment:
 
 # Checks whether the end keywords are aligned properly.
 #
-# EnforcedStyle: start_of_line - the `end` shall be aligned with the start of the line where the matching keyword
-# appears.
+# AlignWith: variable - in assignments, `end` should be aligned with the start of the variable on the left hand side of
+# `=`. In all other situations, `end` should still be aligned with the keyword.
+#
+# variable = if true
+# end
 Lint/EndAlignment:
-  AlignWith: start_of_line
+  AlignWith: variable
   AutoCorrect: true
 
 # Checks for interpolated literals.
