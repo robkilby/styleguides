@@ -327,13 +327,13 @@ Lint/DefEndAlignment:
 
 # Checks whether the end keywords are aligned properly.
 #
-# AlignWith: variable - in assignments, `end` should be aligned with the start of the variable on the left hand side of
-# `=`. In all other situations, `end` should still be aligned with the keyword.
+# EnforcedStyleAlignWith: variable - in assignments, `end` should be aligned with the start of the variable on the
+# left hand side of `=`. In all other situations, `end` should still be aligned with the keyword.
 #
 # variable = if true
 # end
 Lint/EndAlignment:
-  AlignWith: variable
+  EnforcedStyleAlignWith: variable
   AutoCorrect: true
 
 # Checks for interpolated literals.
