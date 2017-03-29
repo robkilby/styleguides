@@ -1,4 +1,4 @@
-# Up to date as of v0.46.0.
+# Up to date as of v0.48.0.
 # See https://github.com/robkilby/styleguides for original.
 # If a cop is not referenced here, the defaults from Rubocop will be used.
 
@@ -9,27 +9,16 @@ AllCops:
     - '**/vendor/**/*'
   DisplayCopNames: true
   DisplayStyleGuide: true
+  EnabledByDefault: true
   ExtraDetails: true
   UseCache: true
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
+  TargetRailsVersion: 5.0
 
 # Always use alias_method when aliasing methods of modules, classes, or singleton classes at runtime, as the lexical
 # scope of alias leads to unpredictability in these cases.
 Style/Alias:
   EnforcedStyle: prefer_alias_method
-
-# Align the elements of a hash literal if they span more than one line.
-#
-# EnforcedHashRocketStyle: key - left alignment of keys.
-#   'a' => 2
-#   'bb' => 3
-#
-# EnforcedColonStyle: key - left alignment of keys.
-#   a: 0
-#   bb: 1
-Style/AlignHash:
-  EnforcedHashRocketStyle: key
-  EnforcedColonStyle: key
 
 # Alignment of parameters in multi-line method calls.
 #
@@ -41,18 +30,6 @@ Style/AlignHash:
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
-# Checks for cases when you could use a block accepting version of a method that does automatic resource cleanup.
-#
-#   # bad
-#   f = File.open('file')
-#
-#   # good
-#   f = File.open('file') do
-#     ...
-#   end
-Style/AutoResourceCleanup:
-  Enabled: true
-
 # Checks if usage of %() or %Q() matches configuration.
 #
 # EnforcedStyle: percent_q - enforces use of %Q().
@@ -63,7 +40,6 @@ Style/BarePercentLiterals:
 #
 # EnforcedStyle: end
 #
-# good
 # kind = case year
 # when 1850..1889
 #   'Blues'
@@ -99,13 +75,16 @@ Style/ClassAndModuleChildren:
 
 # Mapping from undesired method to desired method e.g. to use `detect` over `find`.
 Style/CollectionMethods:
-  Enabled: true
   PreferredMethods:
     collect: 'map'
     collect!: 'map!'
     inject: 'reduce'
     detect: 'detect'
     find_all: 'select'
+
+# This cop checks that a copyright notice was given in each source file.
+Style/Copyright:
+  Enabled: false
 
 # This cop checks for missing top-level documentation of classes and modules. Classes with no body are exempt from the
 # check and so are namespace modules - modules that have nothing in their bodies except classes, other modules, or
@@ -114,6 +93,14 @@ Style/CollectionMethods:
 # The documentation requirement is annulled if the class or module has a "#:nodoc:" comment next to it. Likewise,
 # "#:nodoc: all" does the same for all its children.
 Style/Documentation:
+  Exclude:
+    - '**/spec/**/*'
+
+# This cop checks for missing documentation comments for all methods.
+#
+# The documentation requirement is annulled if the method has a "#:nodoc:" comment next to it.
+Style/DocumentationMethod:
+  RequireForNonPublicMethods: true
   Exclude:
     - '**/spec/**/*'
 
@@ -128,10 +115,6 @@ Style/EmptyElse:
 #
 # EnforcedStyle: expanded - only return an error if the end is on the same line as the def.
 #
-# bad
-# def foo(bar); end
-#
-# good
 # def foo(bar)
 # end
 Style/EmptyMethod:
@@ -143,35 +126,35 @@ Style/EmptyMethod:
 #
 # EnforcedStyle: when_needed - checks the contents of the file before issuing an error.
 Style/Encoding:
-  Enabled: true
   EnforcedStyle: when_needed
 
-# Checks for a line break before the first element in a multi-line array.
-Style/FirstArrayElementLineBreak:
-  Enabled: true
+# This cop checks for extra/unnecessary whitespace.
+Style/ExtraSpacing:
+  AllowForAlignment: false
 
-# Checks for a line break before the first element in a multi-line hash.
-Style/FirstHashElementLineBreak:
-  Enabled: true
+# This cop makes sure that Ruby source files have snake_case names. Ruby scripts (i.e. source files with a shebang in
+# the first line) are ignored.
+#
+# It also requires that each source file should define a class or module with a name which matches the file name
+# (converted to ... case). It further expects it to be nested inside modules which match the names of subdirectories in
+# its path.
+Style/FileName:
+  ExpectMatchingDefinition: true
 
-# Checks for a line break before the first argument in a multi-line method call.
-Style/FirstMethodArgumentLineBreak:
-  Enabled: true
-
-# Checks for a line break before the first parameter in a multi-line method parameter definition.
-Style/FirstMethodParameterLineBreak:
-  Enabled: true
+# This cop checks hash literal syntax. A separate offense is registered for each problematic pair.
+#
+# EnforcedStyle: ruby19_no_mixed_keys - forces use of ruby 1.9 syntax and forbids mixed syntax hashes.
+#
+# {a: 1, b: 2}
+# {:c => 3, 'd' => 4}
+Style/HashSyntax:
+  EnforcedStyle: ruby19_no_mixed_keys
 
 # Checks for if and unless statements that would fit on one line if written as a modifier if/unless.
 #
 # Triggers an warning for if/unless statements that would be under 120 characters.
 Style/IfUnlessModifier:
   MaxLineLength: 120
-
-# Checks for `raise` or `fail` statements which do not specify an explicit exception class. (This raises a
-# `RuntimeError`. Prefer using exception classes which more precisely identify the nature of the error.)
-Style/ImplicitRuntimeError:
-  Enabled: true
 
 # Checks the indentation of the first element in an array literal.
 #
@@ -201,16 +184,23 @@ Style/IndentArray:
 Style/IndentHash:
   EnforcedStyle: consistent
 
-# Checks for methods called on a do...end block. The point of this check is that it's easy to miss the call tacked on
-# to the block when reading code.
-Style/MethodCalledOnDoEndBlock:
-  Enabled: true
+# This cop checks for usages of not (`not` or `!`) called on a method when an inverse of that method can be used
+# instead.
+Style/InverseMethods:
+  InverseMethods:
+    :any?: :none?
+    :even?: :odd?
+    :==: :!=
+    :=~: :!~
+    :<: :>=
+    :>: :<=
+    :present?: :blank?,
+    :include?: :exclude?
 
 # Checks for `if` / `case` expressions that do not have an `else` branch.
 #
 # Only configured to check for `case` statements. It's best practice to always provide a default for `case` statements.
 Style/MissingElse:
-  Enabled: true
   EnforcedStyle: case
 
 # Checks that multiline assignments do not have a newline after the assignment operator.
@@ -221,7 +211,6 @@ Style/MissingElse:
 #   'bar'
 # end
 Style/MultilineAssignmentLayout:
-  Enabled: true
   EnforcedStyle: same_line
 
 # Checks the indentation of the method name part in method calls that span more than one line.
@@ -247,14 +236,6 @@ Style/MultilineOperationIndentation:
 
 # Use `next` to skip iteration instead of a condition at the end.
 #
-# # bad
-# [1, 2].each do |a|
-#   if a == 1 do
-#     puts a
-#   end
-# end
-#
-# # good
 # [1, 2].each do |a|
 #   next unless a == 1
 #
@@ -263,58 +244,22 @@ Style/MultilineOperationIndentation:
 Style/Next:
   EnforcedStyle: always
 
-# Checks for options hashes and discourages them if the current Ruby version supports keyword arguments.
-Style/OptionHash:
-  Enabled: true
+# This cop checks for redundant `return` expressions. Allows parallel return statments such as `return x, y`
+Style/RedundantReturn:
+  AllowMultipleReturnValues: true
 
-# Checks for badly named predicates.
+# This cop checks for spaces between -> and opening parameter brace in lambda literals.
 #
-# # bad
-# def is_even?(value) ...
+# EnforcedStyle: require_space
 #
-# # good
-# def even?(value)
-#
-# # bad
-# def has_value? ...
-#
-# # good
-# def value? ...
-Style/PredicateName:
-  NamePrefix:
-    - is_
-    - was_
-    - has_
-    - have_
-  NamePrefixBlacklist:
-    - is_
-    - was_
-    - has_
-    - have_
-
-# Checks for the use of the send method. Prefers use of `__send__` and `public_send` over `send`.
-Style/Send:
-  Enabled: true
-
-# Enforces the use of consistent method names from the String class. So far it enforces use of `to_sym` over `intern`.
-Style/StringMethods:
-  Enabled: true
-
-# Check for array literals made up of symbols that are not using the %i() syntax.
-Style/SymbolArray:
-  Enabled: true
-  EnforcedStyle: brackets
+# a = -> (x, y) { x + y }
+Style/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
 
 # Checks for the presence of parentheses around ternary conditions.
 #
 # EnforcedStyle: require_parentheses_when_complex
 #
-# bad
-# foo = (bar?) ? a : b
-# foo = (bar.baz?) ? a : b
-# foo = bar && baz ? a : b
-#
-# good
 # foo = bar? ? a : b
 # foo = bar.baz ? a : b
 # foo = (bar && baz) ? a : b
@@ -324,12 +269,6 @@ Style/TernaryParentheses:
 # Checks that all numbered variables use the configured style for their numbering.
 #
 # EnforcedStyle: snake_case
-#
-# # bad
-#
-# variable1 = 1
-#
-# # good
 #
 # variable_1 = 1
 Style/VariableNumber:
@@ -349,6 +288,8 @@ Metrics/AbcSize:
 # This cop checks if the length of a block exceeds some maximum value. Ignores comment-only lines.
 Metrics/BlockLength:
   Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
     - '**/routes.rb'
     - '**/config/initializers/**/*.rb'
     - '**/config/environments/**/*.rb'
@@ -371,6 +312,7 @@ Metrics/CyclomaticComplexity:
 # Checks the length of lines in the source code.
 Metrics/LineLength:
   Max: 120
+  IgnoreCopDirectives: true
   Exclude:
     - '**/routes.rb'
     - '**/config/initializers/**/*.rb'
@@ -385,45 +327,34 @@ Metrics/MethodLength:
 Metrics/ModuleLength:
   Max: 100
 
-# Tries to produce a complexity score that's a measure of the complexity the reader experiences when looking at a
-# method. For that reason it considers `when` nodes as something that doesn't add as much complexity as an `if` or a
-# `&&`. Except if it's one of those special `case`/`when` constructs where there's no expression after `case`. Then
-# the cop treats it as an `if`/`elsif`/`elsif`... and lets all the `when` nodes count. In contrast to
-# CyclomaticComplexity, it considers `else` nodes as adding complexity.
-Metrics/PerceivedComplexity:
-  Max: 7
-
 #################### Lint ################################
 
 # Checks for assignments in the conditions of if/while/until.
 Lint/AssignmentInCondition:
   AllowSafeAssignment: false
 
-# Checks whether the end keywords of method definitions are aligned properly.
-Lint/DefEndAlignment:
-  AutoCorrect: true
+# This cop checks whether the end keywords are aligned properly for do end blocks.
+#
+# EnforcedStyleAlignWith: start_of_line
+#
+# foo.bar
+#   .each do
+#      baz
+# end
+Lint/BlockAlignment:
+  EnforcedStyleAlignWith: start_of_line
 
 # Checks whether the end keywords are aligned properly.
 #
-# AlignWith: variable - in assignments, `end` should be aligned with the start of the variable on the left hand side of
-# `=`. In all other situations, `end` should still be aligned with the keyword.
+# EnforcedStyleAlignWith: variable - in assignments, `end` should be aligned with the start of the variable on the left
+# hand side of `=`. In all other situations, `end` should still be aligned with the keyword.
 #
 # variable = if true
 # end
 Lint/EndAlignment:
-  AlignWith: variable
-  AutoCorrect: true
-
-# Checks for interpolated literals.
-#
-# "result is #{10}"
-Lint/LiteralInInterpolation:
-  AutoCorrect: true
+  EnforcedStyleAlignWith: start_of_line
 
 ##################### Rails ##################################
-
-Rails:
-  Enabled: true
 
 # Checks for the correct use of `Date` methods, such as `Date.today`, `Date.current` etc.
 #
@@ -438,14 +369,9 @@ Rails:
 Rails/Date:
   EnforcedStyle: strict
 
-# Identifies possible cases where Active Record save! or related should be used instead of save because the model might
-# have failed to save and an exception is better than unhandled failure.
-#
-# This will ignore calls that are assigned to a variable or used as the condition in an if/unless statement.  It will
-# also ignore any call with more than 2 arguments as that is likely not an Active Record call or if a
-# Model.update(id, attributes) call.
-Rails/SaveBang:
-  Enabled: true
+# This cop checks for usages of `try` and `try!` where `&.` could be used instead.
+Rails/SafeNavigation:
+  ConvertTry: true
 
 # Checks for the use of Time methods without zone.
 #
