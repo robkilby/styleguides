@@ -94,6 +94,8 @@ Style/Copyright:
 # "#:nodoc: all" does the same for all its children.
 Style/Documentation:
   Exclude:
+    - '**/config/**/*.rb'
+    - '**/db/migrate/*.rb'
     - '**/spec/**/*'
 
 # This cop checks for missing documentation comments for all methods.
@@ -102,6 +104,7 @@ Style/Documentation:
 Style/DocumentationMethod:
   RequireForNonPublicMethods: true
   Exclude:
+    - '**/config/**/*.rb'
     - '**/db/migrate/*.rb'
     - '**/spec/**/*'
 
