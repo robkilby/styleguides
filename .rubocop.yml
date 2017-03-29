@@ -177,7 +177,7 @@ Style/IndentHash:
   EnforcedStyle: consistent
 
 # This cop checks for trailing inline comments.
-Style/InlineComments:
+Style/InlineComment:
   Enabled: false
 
 # This cop checks for usages of not (`not` or `!`) called on a method when an inverse of that method can be used
