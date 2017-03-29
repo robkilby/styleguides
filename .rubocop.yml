@@ -102,6 +102,7 @@ Style/Documentation:
 Style/DocumentationMethod:
   RequireForNonPublicMethods: true
   Exclude:
+    - '**/db/migrate/*.rb'
     - '**/spec/**/*'
 
 # Warn on empty else statements
@@ -174,6 +175,10 @@ Style/IndentArray:
 # })
 Style/IndentHash:
   EnforcedStyle: consistent
+
+# This cop checks for trailing inline comments.
+Style/InlineComments:
+  Enabled: false
 
 # This cop checks for usages of not (`not` or `!`) called on a method when an inverse of that method can be used
 # instead.
