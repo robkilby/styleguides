@@ -72,6 +72,7 @@ Style/CaseIndentation:
 Style/ClassAndModuleChildren:
   Exclude:
     - '**/spec/**/*'
+    - '**/test/**/*'
 
 # Mapping from undesired method to desired method e.g. to use `detect` over `find`.
 Style/CollectionMethods:
@@ -97,6 +98,7 @@ Style/Documentation:
     - '**/config/**/*.rb'
     - '**/db/migrate/*.rb'
     - '**/spec/**/*'
+    - '**/test/**/*'
 
 # This cop checks for missing documentation comments for all methods.
 #
@@ -107,6 +109,7 @@ Style/DocumentationMethod:
     - '**/config/**/*.rb'
     - '**/db/migrate/*.rb'
     - '**/spec/**/*'
+    - '**/test/**/*'
 
 # Warn on empty else statements
 #
@@ -125,6 +128,7 @@ Style/EmptyMethod:
   EnforcedStyle: expanded
   Exclude:
     - '**/spec/**/*'
+    - '**/test/**/*'
 
 # Checks whether the source file has a utf-8 encoding comment or not.
 #
@@ -297,6 +301,7 @@ Metrics/BlockLength:
     - '**/config/initializers/**/*.rb'
     - '**/config/environments/**/*.rb'
     - '**/spec/**/*'
+    - '**/test/**/*'
     - '**/*.gemspec'
 
 # Checks if the length a class exceeds some maximum value. Ignores comment-only lines.
