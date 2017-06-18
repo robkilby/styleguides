@@ -1,4 +1,4 @@
-# Up to date as of v0.48.0.
+# Up to date as of v0.49.1
 # See https://github.com/robkilby/styleguides for original.
 # If a cop is not referenced here, the defaults from Rubocop will be used.
 
@@ -20,42 +20,11 @@ AllCops:
 Style/Alias:
   EnforcedStyle: prefer_alias_method
 
-# Alignment of parameters in multi-line method calls.
-#
-# The `with_fixed_indentation` style aligns the following lines with one level of indentation relative to the start of
-# the line with the method call.
-#
-#     method_call(a,
-#       b)
-Style/AlignParameters:
-  EnforcedStyle: with_fixed_indentation
-
 # Checks if usage of %() or %Q() matches configuration.
 #
 # EnforcedStyle: percent_q - enforces use of %Q().
 Style/BarePercentLiterals:
   EnforcedStyle: percent_q
-
-# Checks how the whens of a case expression are indented in relation to its end keyword.
-#
-# EnforcedStyle: end
-#
-# kind = case year
-# when 1850..1889
-#   'Blues'
-# when 1890..1909
-#   'Ragtime'
-# when 1910..1929
-#   'New Orleans Jazz'
-# when 1930..1939
-#   'Swing'
-# when 1940..1950
-#   'Bebop'
-# else
-#   'Jazz'
-# end
-Style/CaseIndentation:
-  EnforcedStyle: end
 
 # Checks the style of children definitions at classes and modules. Basically there are two different styles:
 #
@@ -136,52 +105,11 @@ Style/EmptyMethod:
 Style/Encoding:
   EnforcedStyle: when_needed
 
-# This cop checks for extra/unnecessary whitespace.
-Style/ExtraSpacing:
-  AllowForAlignment: false
-
-# This cop checks hash literal syntax. A separate offense is registered for each problematic pair.
-#
-# EnforcedStyle: ruby19_no_mixed_keys - forces use of ruby 1.9 syntax and forbids mixed syntax hashes.
-#
-# {a: 1, b: 2}
-# {:c => 3, 'd' => 4}
-Style/HashSyntax:
-  EnforcedStyle: ruby19_no_mixed_keys
-
 # Checks for if and unless statements that would fit on one line if written as a modifier if/unless.
 #
 # Triggers an warning for if/unless statements that would be under 120 characters.
 Style/IfUnlessModifier:
   MaxLineLength: 120
-
-# Checks the indentation of the first element in an array literal.
-#
-# The value `consistent` means that the indentation of the first element shall always be relative to the first position
-# of the line where the opening bracket is.
-#
-# array = [
-#   :value
-# ]
-# and_in_a_method_call([
-#   :no_difference
-# ])
-Style/IndentArray:
-  EnforcedStyle: consistent
-
-# Checks the indentation of the first key in a hash literal.
-#
-# The value `consistent` means that the indentation of the first key shall always be relative to the first position
-# of the line where the opening brace is.
-#
-# hash = {
-#   key: :value
-# }
-# and_in_a_method_call({
-#   no: :difference
-# })
-Style/IndentHash:
-  EnforcedStyle: consistent
 
 # This cop checks for trailing inline comments.
 Style/InlineComment:
@@ -200,49 +128,22 @@ Style/InverseMethods:
     :present?: :blank?,
     :include?: :exclude?
 
-# TODO: This cop is disabled until a bug is patched on v0.48.0 where it flags setters.
-Style/MethodCallWithArgsParentheses:
-  Enabled: false
-
 # Checks for `if` / `case` expressions that do not have an `else` branch.
 #
 # Only configured to check for `case` statements. It's best practice to always provide a default for `case` statements.
 Style/MissingElse:
   EnforcedStyle: case
 
-# Checks that multiline assignments do not have a newline after the assignment operator.
-#
-# EnforcedStyle: same_line
-#
-# foo = if expression
-#   'bar'
-# end
-Style/MultilineAssignmentLayout:
-  EnforcedStyle: same_line
-
-# Checks the indentation of the method name part in method calls that span more than one line.
-#
-# EnforcedStyle: indented
-#
-# Thing.a
-#   .b
-#   .c
-Style/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
-
-# Checks the indentation of the right hand side operand in binary operations that span more than one line.
-#
-# EnforcedStyle: indented
-#
-# if a &&
-#     b
-#   something
-# end
-Style/MultilineOperationIndentation:
-  EnforcedStyle: indented
-
 # Use `next` to skip iteration instead of a condition at the end.
 #
+# # bad
+# [1, 2].each do |a|
+#   if a == 1 do
+#     puts a
+#   end
+# end
+#
+# # good
 # [1, 2].each do |a|
 #   next unless a == 1
 #
@@ -267,6 +168,12 @@ Style/SpaceInLambdaLiteral:
 #
 # EnforcedStyle: require_parentheses_when_complex
 #
+# bad
+# foo = (bar?) ? a : b
+# foo = (bar.baz?) ? a : b
+# foo = bar && baz ? a : b
+#
+# good
 # foo = bar? ? a : b
 # foo = bar.baz ? a : b
 # foo = (bar && baz) ? a : b
@@ -277,6 +184,12 @@ Style/TernaryParentheses:
 #
 # EnforcedStyle: snake_case
 #
+# # bad
+#
+# variable1 = 1
+#
+# # good
+#
 # variable_1 = 1
 Style/VariableNumber:
   EnforcedStyle: snake_case
@@ -284,6 +197,112 @@ Style/VariableNumber:
 # Checks for while and until statements that would fit on one line if written as a modifier while/until.
 Style/WhileUntilModifier:
   MaxLineLength: 120
+
+#################### Layout ################################
+
+# Align the elements of a hash literal if they span more than one line.
+#
+# EnforcedHashRocketStyle: key - left alignment of keys.
+#   'a' => 2
+#   'bb' => 3
+#
+# EnforcedColonStyle: key - left alignment of keys.
+#   a: 0
+#   bb: 1
+Layout/AlignHash:
+  EnforcedHashRocketStyle: key
+  EnforcedColonStyle: key
+
+# Alignment of parameters in multi-line method calls.
+#
+# The `with_fixed_indentation` style aligns the following lines with one level of indentation relative to the start of
+# the line with the method call.
+#
+#     method_call(a,
+#       b)
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+# Checks how the whens of a case expression are indented in relation to its end keyword.
+#
+# EnforcedStyle: end
+#
+# good
+# kind = case year
+# when 1850..1889
+#   'Blues'
+# when 1890..1909
+#   'Ragtime'
+# when 1910..1929
+#   'New Orleans Jazz'
+# when 1930..1939
+#   'Swing'
+# when 1940..1950
+#   'Bebop'
+# else
+#   'Jazz'
+# end
+Layout/CaseIndentation:
+  EnforcedStyle: end
+
+# Checks the indentation of the first element in an array literal.
+#
+# The value `consistent` means that the indentation of the first element shall always be relative to the first position
+# of the line where the opening bracket is.
+#
+# array = [
+#   :value
+# ]
+# and_in_a_method_call([
+#   :no_difference
+# ])
+Layout/IndentArray:
+  EnforcedStyle: consistent
+
+# Checks the indentation of the first key in a hash literal.
+#
+# The value `consistent` means that the indentation of the first key shall always be relative to the first position
+# of the line where the opening brace is.
+#
+# hash = {
+#   key: :value
+# }
+# and_in_a_method_call({
+#   no: :difference
+# })
+Layout/IndentHash:
+  EnforcedStyle: consistent
+
+# Checks that multiline assignments do not have a newline after the assignment operator.
+#
+# EnforcedStyle: same_line
+#
+# foo = if expression
+#   'bar'
+# end
+Layout/MultilineAssignmentLayout:
+  EnforcedStyle: same_line
+
+# Checks the indentation of the method name part in method calls that span more than one line.
+#
+# EnforcedStyle: indented
+#
+# Thing.a
+#   .b
+#   .c
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# Checks the indentation of the right hand side operand in binary operations that span more than one line.
+#
+# EnforcedStyle: indented
+#
+# if a &&
+#     b
+#   something
+# end
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
 
 #################### Metrics ################################
 
@@ -360,7 +379,7 @@ Lint/BlockAlignment:
 # variable = if true
 # end
 Lint/EndAlignment:
-  EnforcedStyleAlignWith: start_of_line
+  EnforcedStyleAlignWith: variable
 
 ##################### Rails ##################################
 
