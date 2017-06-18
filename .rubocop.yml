@@ -156,14 +156,6 @@ Style/Next:
 Style/RedundantReturn:
   AllowMultipleReturnValues: true
 
-# This cop checks for spaces between -> and opening parameter brace in lambda literals.
-#
-# EnforcedStyle: require_space
-#
-# a = -> (x, y) { x + y }
-Style/SpaceInLambdaLiteral:
-  EnforcedStyle: require_space
-
 # Checks for the presence of parentheses around ternary conditions.
 #
 # EnforcedStyle: require_parentheses_when_complex
@@ -303,6 +295,14 @@ Layout/MultilineMethodCallIndentation:
 # end
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
+
+# This cop checks for spaces between -> and opening parameter brace in lambda literals.
+#
+# EnforcedStyle: require_space
+#
+# a = -> (x, y) { x + y }
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
 
 #################### Metrics ################################
 
