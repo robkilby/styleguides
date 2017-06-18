@@ -134,6 +134,10 @@ Style/InverseMethods:
 Style/MissingElse:
   EnforcedStyle: case
 
+# TODO: This cop is disabled until a bug is patched on v0.48.0 where it flags setters.
+Style/MethodCallWithArgsParentheses:
+  Enabled: false
+
 # Use `next` to skip iteration instead of a condition at the end.
 #
 # # bad
